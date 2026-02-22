@@ -1,3 +1,5 @@
+from functools import lru_cache
+
 from pydantic_settings import BaseSettings
 
 
@@ -14,4 +16,16 @@ class Settings(BaseSettings):
     model_config = {"env_file": ".env"}
 
 
-settings = Settings()
+@lru_cache
+def _get_settings() -> Settings:
+    return Settings()
+
+
+class _SettingsProxy:
+    """Lazy proxy that defers Settings instantiation until first attribute access."""
+
+    def __getattr__(self, name: str):
+        return getattr(_get_settings(), name)
+
+
+settings = _SettingsProxy()
