@@ -2,7 +2,7 @@
 name = "chasqui"
 version = "0.1.0"
 description = "WhatsApp notifications microservice for the Torke platform"
-readme = "CLAUDE.md"
+readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "fastapi>=0.115.0",
