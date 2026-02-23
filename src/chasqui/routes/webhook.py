@@ -6,7 +6,7 @@ from chasqui.config import settings
 
 logger = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/webhook", tags=["webhook"])
+router = APIRouter(prefix="/webhook", tags=["webhook"], include_in_schema=False)
 
 
 @router.get("/whatsapp")

@@ -1,13 +1,14 @@
 import logging
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
+from chasqui.auth import require_jwt
 from chasqui.services.whatsapp import WhatsAppClient
 
 logger = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/messages", tags=["messages"])
+router = APIRouter(prefix="/messages", tags=["messages"], dependencies=[Depends(require_jwt)])
 
 wa_client = WhatsAppClient()
 
