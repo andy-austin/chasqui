@@ -2,7 +2,7 @@ import logging
 
 from fastapi import FastAPI
 
-from chasqui.routes import health, messages, webhook
+from chasqui.routes import auth, health, messages, webhook
 
 logging.basicConfig(
     level=logging.INFO,
@@ -16,5 +16,6 @@ app = FastAPI(
 )
 
 app.include_router(health.router)
+app.include_router(auth.router)
 app.include_router(webhook.router)
 app.include_router(messages.router)

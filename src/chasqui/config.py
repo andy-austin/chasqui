@@ -9,6 +9,10 @@ class Settings(BaseSettings):
     whatsapp_verify_token: str = "chasqui_token_2026"
     whatsapp_api_version: str = "v22.0"
 
+    jwt_secret: str
+    jwt_algorithm: str = "HS256"
+    admin_secret: str
+
     @property
     def whatsapp_api_base_url(self) -> str:
         return f"https://graph.facebook.com/{self.whatsapp_api_version}"
