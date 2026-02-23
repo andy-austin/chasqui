@@ -3,13 +3,15 @@ from datetime import UTC, datetime, timedelta
 
 import jwt
 
-# JWT test secret — set before importing anything that reads settings
+# Test secrets — set before importing anything that reads settings
 TEST_JWT_SECRET = "test-jwt-secret-for-chasqui-32bytes!"
+TEST_ADMIN_SECRET = "test-admin-secret"
 
 os.environ.setdefault("WHATSAPP_API_TOKEN", "test-token")
 os.environ.setdefault("WHATSAPP_PHONE_NUMBER_ID", "123456789")
 os.environ.setdefault("WHATSAPP_VERIFY_TOKEN", "test-verify-token")
 os.environ.setdefault("JWT_SECRET", TEST_JWT_SECRET)
+os.environ.setdefault("ADMIN_SECRET", TEST_ADMIN_SECRET)
 
 import pytest  # noqa: E402
 from httpx import ASGITransport, AsyncClient  # noqa: E402
@@ -36,6 +38,11 @@ def make_expired_token(sub: str = "test-client", secret: str = TEST_JWT_SECRET) 
 @pytest.fixture
 def auth_header() -> dict[str, str]:
     return {"Authorization": f"Bearer {make_token()}"}
+
+
+@pytest.fixture
+def admin_header() -> dict[str, str]:
+    return {"Authorization": f"Bearer {TEST_ADMIN_SECRET}"}
 
 
 @pytest.fixture

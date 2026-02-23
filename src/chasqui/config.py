@@ -11,6 +11,7 @@ class Settings(BaseSettings):
 
     jwt_secret: str
     jwt_algorithm: str = "HS256"
+    admin_secret: str
 
     @property
     def whatsapp_api_base_url(self) -> str:

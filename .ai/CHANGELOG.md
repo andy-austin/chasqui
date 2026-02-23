@@ -8,8 +8,10 @@ All notable changes to this project are documented here, in reverse chronologica
 - **JWT authentication** for `/messages/*` endpoints using PyJWT (HS256).
   - Tokens require `sub` (client ID) and `exp` (expiration) claims — no indefinite tokens.
   - `JWT_SECRET` env var configures the signing secret; `JWT_ALGORITHM` defaults to HS256.
-- **Token generation script** (`scripts/generate_token.py`) to issue per-client tokens.
+- **Token generation endpoint** `POST /auth/token` — issue per-client JWTs via API, protected by `ADMIN_SECRET`.
+- **Token generation script** (`scripts/generate_token.py`) to issue per-client tokens from CLI.
 - Auth rejection tests: missing token, invalid token, wrong secret, expired token.
+- Token endpoint tests: issuance, admin auth, validation, end-to-end flow.
 
 ### Changed
 - Webhook endpoints (`/webhook/whatsapp`) hidden from Swagger docs (`include_in_schema=False`) — they cannot use our auth since Meta calls them directly.
