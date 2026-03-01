@@ -1,15 +1,21 @@
 from __future__ import annotations
 
 from datetime import datetime
+from enum import StrEnum
 from typing import Any, Protocol
 
 from pydantic import BaseModel
 
 
+class EventType(StrEnum):
+    MESSAGE = "message"
+    STATUS = "status"
+
+
 class ChannelEvent(BaseModel):
     """Normalized webhook event produced by any channel provider."""
 
-    event_type: str
+    event_type: EventType
     message_id: str
     timestamp: datetime
     channel: str

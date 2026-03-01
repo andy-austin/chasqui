@@ -5,7 +5,7 @@ from typing import Any
 
 import pytest
 
-from chasqui.services.providers import ChannelEvent, ChannelProvider
+from chasqui.services.providers import ChannelEvent, ChannelProvider, EventType
 
 
 class _DummyProvider:
@@ -17,7 +17,7 @@ class _DummyProvider:
     async def parse_webhook(self, payload: dict[str, Any]) -> list[ChannelEvent]:
         return [
             ChannelEvent(
-                event_type="message",
+                event_type=EventType.MESSAGE,
                 message_id=payload.get("id", "test-id"),
                 timestamp=datetime.now(UTC),
                 channel="dummy",
@@ -47,7 +47,7 @@ async def test_parse_webhook_returns_channel_events() -> None:
     assert len(events) == 1
     event = events[0]
     assert isinstance(event, ChannelEvent)
-    assert event.event_type == "message"
+    assert event.event_type == EventType.MESSAGE
     assert event.message_id == "msg-42"
     assert event.channel == "dummy"
 
@@ -61,12 +61,12 @@ async def test_health_check_returns_bool() -> None:
 def test_channel_event_fields() -> None:
     now = datetime.now(UTC)
     event = ChannelEvent(
-        event_type="status",
+        event_type=EventType.STATUS,
         message_id="wamid-xyz",
         timestamp=now,
         channel="whatsapp",
     )
-    assert event.event_type == "status"
+    assert event.event_type == EventType.STATUS
     assert event.message_id == "wamid-xyz"
     assert event.timestamp == now
     assert event.channel == "whatsapp"
